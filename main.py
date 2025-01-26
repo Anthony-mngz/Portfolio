@@ -1,64 +1,39 @@
-import pandas as pd
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
+from repository import get_data, get_weight
+from model import portfolio_return, portfolio_standard_dev, portfolio_variance
+from view import to_print, display_chart
 
 
 def main():
     # https://campus.datacamp.com/courses/introduction-to-portfolio-analysis-in-python/introduction-to-portfolio-analysis?ex=6
-    data = pd.read_csv(r'input\small_portfolio.csv', delimiter=',', index_col='date', parse_dates=['date'])
-
-    # Calculate percentage returns
-    returns = data.pct_change()
-
-    # Calculate individual mean returns
-    meanDailyReturns = returns.mean()
+    data = get_data()
 
     # Define weights for the portfolio
-    weights = np.array([0.5, 0.2, 0.2, 0.1])
+    weights = get_weight()
+
+    returns = data.pct_change()
 
     # Calculate expected portfolio performance
-    portReturn = np.sum(meanDailyReturns * weights)
+    port_return = portfolio_return(weights, data)
 
     # Print the portfolio return
-    print(portReturn)
+    to_print(port_return)
 
-    # https: // campus.datacamp.com / courses / introduction - to - portfolio - analysis - in -python / introduction - to - portfolio - analysis?ex = 7
-    # Create portfolio returns column
-    returns['Portfolio'] = returns.dot(weights)
-
-    # Calculate cumulative returns
-    daily_cum_ret = (1 + returns).cumprod()
-
-    # Plot the portfolio cumulative returns only
-    fig, ax = plt.subplots()
-    ax.plot(daily_cum_ret.index, daily_cum_ret.Portfolio, color='purple', label="portfolio")
-    ax.xaxis.set_major_locator(matplotlib.dates.YearLocator())
-    plt.legend()
-    plt.show()
-
-    # https: // campus.datacamp.com / courses / introduction - to - portfolio - analysis - in -python / introduction - to - portfolio - analysis?ex = 9
-    # Get percentage daily returns
-    daily_returns = data.pct_change()
-
-    # Assign portfolio weights
-    weights = np.array([0.05, 0.4, 0.3, 0.25])
-
-    # Calculate the covariance matrix
-    cov_matrix = (daily_returns.cov()) * 250
-
+    display_chart(data, weights)
     # Calculate the portfolio variance
-    port_variance = np.dot(weights.T, np.dot(cov_matrix, weights))
+    port_variance = portfolio_variance(weights, data)
 
     # Print the result
-    print(str(np.round(port_variance, 4) * 100) + '%')
+    to_print(str(np.round(port_variance, 4) * 100) + '%')
 
     # https: // campus.datacamp.com / courses / introduction - to - portfolio - analysis - in -python / introduction - to - portfolio - analysis?ex = 10
     # Calculate the standard deviation by taking the square root
-    port_standard_dev = np.sqrt(np.dot(weights.T, np.dot(cov_matrix, weights)))
+    port_standard_dev = portfolio_standard_dev(weights, data)
 
     # Print the results
-    print(str(np.round(port_standard_dev, 4) * 100) + '%')
+    to_print(str(np.round(port_standard_dev, 4) * 100) + '%')
 
 
 if __name__ == '__main__':
