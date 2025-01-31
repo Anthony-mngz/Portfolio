@@ -1,6 +1,4 @@
 import numpy as np
-import matplotlib
-import matplotlib.pyplot as plt
 from repository import get_data, get_weight
 from model import portfolio_return, portfolio_standard_dev, portfolio_variance, portfolio_cumulative_returns
 from view import to_print, display_chart
