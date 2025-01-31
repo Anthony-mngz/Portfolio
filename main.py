@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 from repository import get_data, get_weight
-from model import portfolio_return, portfolio_standard_dev, portfolio_variance
+from model import portfolio_return, portfolio_standard_dev, portfolio_variance, portfolio_cumulative_returns
 from view import to_print, display_chart
 
 
@@ -13,15 +13,15 @@ def main():
     # Define weights for the portfolio
     weights = get_weight()
 
-    returns = data.pct_change()
-
     # Calculate expected portfolio performance
     port_return = portfolio_return(weights, data)
 
     # Print the portfolio return
     to_print(port_return)
+    to_print(portfolio_cumulative_returns(data, weights))
 
     display_chart(data, weights)
+
     # Calculate the portfolio variance
     port_variance = portfolio_variance(weights, data)
 

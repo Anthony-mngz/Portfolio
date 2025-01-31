@@ -43,6 +43,8 @@ def portfolio_standard_dev(weights, data):
     return np.sqrt(np.dot(weights.T, np.dot(cov_matrix, weights)))
 
 
-def portfolio_cumulative_returns(returns):
+def portfolio_cumulative_returns(data, weights):
+    returns = data.pct_change()
+    returns["Portfolio"] = returns.dot(weights)
     daily_cum_ret = (1 + returns).cumprod()
     return daily_cum_ret

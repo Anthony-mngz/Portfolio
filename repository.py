@@ -1,5 +1,5 @@
 import pandas as pd
-import numpy as np
+import yfinance as yf
 
 
 def get_data():
@@ -13,4 +13,13 @@ def get_data():
 
 def get_weight():
     """"""
-    return np.array([0.05, 0.4, 0.3, 0.25])
+    portfolio = {"GE": 0.5, "JPM": 0.2, "MSFT": 0.2, "PG": 0.1}
+    return portfolio
+
+"""def get_data():
+    return pd.read_csv(
+        r"input\small_portfolio.csv",
+        delimiter=",",
+        index_col="date",
+        parse_dates=["date"],
+    )"""

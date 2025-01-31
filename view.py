@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 
 def display_chart(data, weights):
     returns = data.pct_change()
@@ -10,7 +11,7 @@ def display_chart(data, weights):
     # Plot the portfolio cumulative returns only
     fig, ax = plt.subplots()
     ax.plot(daily_cum_ret.index, daily_cum_ret.Portfolio, color='purple', label="portfolio")
-    ax.xaxis.set_major_locator(plt.dates.YearLocator())
+    ax.xaxis.set_major_locator(mdates.YearLocator())
     plt.legend()
     plt.show()
 
