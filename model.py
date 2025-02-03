@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def portfolio_return(weights, data):
+def portfolio_return(weights: np.array, data: pd.DataFrame) -> np.float64:
     """
      Calculate expected portfolio performance
 
@@ -10,6 +10,7 @@ def portfolio_return(weights, data):
 
      return : retourne la performance du portefeuille
      """
+    np.testing.assert_almost_equal(np.sum(weights),1)
     returns = data.pct_change()
     mean_daily_returns = returns.mean()
     return np.sum(mean_daily_returns * weights)
